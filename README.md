@@ -1,6 +1,9 @@
 # Sale-Distribution-Builder
 An implementation of the projection of distributions specified via distribution builder for the problem of timing an asset sale. Details can be found in the paper "*Optimal Selling of Defaultable Assets using the Distribution Builder*" by S. Jin and S. Sturm, https://arxiv.org/abs/2608.21716. Created with the help of ChatGPT 5.6(Sol) based on an earlier implementation of the distribution builder by Benjamin Rajotte.
 
+# Use
+Download the files and call the file *DistributionBuilder.py* (requires NumPy and SciPy). Add the model parameters, choose a distance that is minimized by projection as well as a grid size. Use the mouse to draw the desired distribution with the distribution builder. Clicking at a point in the array adds mass to the base point of the field, corresponding to the height at which clicked. Clicking at a point that already has mass, all mass above the click point is removed.  **Apply inputs** updates the data, **Project** calculates the optimal distribution.
+
 # Distribution Builder — optimal selling projection
 
 ## Purpose
