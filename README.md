@@ -1,5 +1,5 @@
 # Sale-Distribution-Builder
-An implementation of the projection of distributions specified via distribution builder for the problem of timing an asset sale. Details can be found in the paper "Optimal Selling of Defaultable Assets using the Distribution Builder" by S. Jin and S. Sturm, https://arxiv.org/abs/2608.21716. Created with the help of ChatGPT 5.6(Sol) based on an earlier implementation of the distribution builder by Benjamin Rajotte.
+An implementation of the projection of distributions specified via distribution builder for the problem of timing an asset sale. Details can be found in the paper "*Optimal Selling of Defaultable Assets using the Distribution Builder*" by S. Jin and S. Sturm, https://arxiv.org/abs/2608.21716. Created with the help of ChatGPT 5.6(Sol) based on an earlier implementation of the distribution builder by Benjamin Rajotte.
 
 # Distribution Builder — optimal selling projection
 
@@ -7,7 +7,7 @@ An implementation of the projection of distributions specified via distribution 
 
 The application provides a distribution-builder interface for choosing a distribution of the price at which a defaultable asset is sold.
 
-The user draws a target law μ. The program tests its scaled mean and, when appropriate, computes an attainable or optimal attainable law ν using the extended-f-divergence framework of Jin and Sturm, *Optimal Selling of Defaultable Assets using the Distribution Builder*, \url{\url{https://arxiv.org/abs/2608.21716}.
+The user draws a target law μ. The program tests its scaled mean and, when appropriate, computes an attainable or optimal attainable law ν using the extended-f-divergence framework of Jin and Sturm, *Optimal Selling of Defaultable Assets using the Distribution Builder*, \url{https://arxiv.org/abs/2608.21716}.
 
 The numerical result is a projected **distribution**. The program does not construct or simulate the corresponding Azéma–Yor selling rule.
 
@@ -24,12 +24,13 @@ absorbed when it reaches zero. There is no fixed calendar horizon. The paper's f
 The scale function is normalized by $S(r_0) = 0$:
 
 $$
-S(x)=
- \begin{bmatrix}
-x-r_0, & b=0,\\
+S(x) = x-r_0, \qquad  b=0,
+$$
+and
+$$
+S(x) =
 \frac{\sigma^2}{2b}
-\left[1-\exp\left(-\dfrac{2b(x-r_0)}{\sigma^2}\right)\right],&b\ne0.
-\end{bmatrix} 
+\left[1-\exp\left(-\dfrac{2b(x-r_0)}{\sigma^2}\right)\right],\qquad b\ne0.
 $$
 
 For a law μ, define its scaled mean
