@@ -45,7 +45,7 @@ For this process:
 - if $b > 0$, $\mu$ is attainable exactly when $m_\mu = 0$;
 - the projection problems below use the boundary $m_\nu = 0$.
 
-For the paper's example $R_t = 2 + B_t$ for a Brownian motion $B$, $S(x) = x − 2$, so the scaled mean is simply $\int x \mu(dx) - 2$.
+For the paper's example $R_t = 2 + B_t$, $S(x) = x − 2$, so the scaled mean is simply $\int x \mu(dx) - 2$.
 
 ## Which projection is solved?
 
