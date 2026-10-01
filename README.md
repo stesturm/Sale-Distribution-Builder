@@ -1,5 +1,5 @@
 # Sale-Distribution-Builder
-An implementation of the projection of distributions specified via distribution builder for the problem of timing an asset sale. Details can be found in the paper "Optimal Selling of Defaultable Assets using the Distribution Builder" by S. Jin and S. Sturm, https://arxiv.org/abs/2608.21716.
+An implementation of the projection of distributions specified via distribution builder for the problem of timing an asset sale. Details can be found in the paper "Optimal Selling of Defaultable Assets using the Distribution Builder" by S. Jin and S. Sturm, https://arxiv.org/abs/2608.21716. Created with the help of ChatGPT 5.6(Sol) based on an earlier implementation of the distribution builder by Benjamin Rajotte.
 
 # Distribution Builder — optimal selling projection
 
