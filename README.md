@@ -5,11 +5,11 @@ An implementation of the projection of distributions specified via distribution 
 
 ## Purpose
 
-The application reuses the distribution-builder interface for a different problem: choosing a distribution of the price at which a defaultable asset is sold.
+The application provides a distribution-builder interface for choosing a distribution of the price at which a defaultable asset is sold.
 
-The user draws a target law μ. The program tests its scaled mean and, when appropriate, computes an attainable or optimal attainable law ν using the extended-f-divergence framework of Jin and Sturm, *Optimal Selling of Defaultable Assets using the Distribution Builder*.
+The user draws a target law μ. The program tests its scaled mean and, when appropriate, computes an attainable or optimal attainable law ν using the extended-f-divergence framework of Jin and Sturm, [*Optimal Selling of Defaultable Assets using the Distribution Builder*](\url{https://arxiv.org/abs/2608.21716).
 
-The numerical result is a projected **distribution**. It does not yet construct or simulate the corresponding Azéma–Yor selling rule.
+The numerical result is a projected **distribution**. The program does not construct or simulate the corresponding Azéma–Yor selling rule.
 
 ## Market model
 
@@ -21,15 +21,15 @@ $$
 
 absorbed when it reaches zero. There is no fixed calendar horizon. The paper's formal admissibility condition permits sale at ruin, so a mass at zero is possible.
 
-The scale function is normalised by S(r₀) = 0:
+The scale function is normalized by S(r₀) = 0:
 
 $$
 S(x)=
-\begin{cases}
+\left\{ \begin{array}{ll}
 x-r_0, & b=0,\\[2mm]
 \dfrac{\sigma^2}{2b}
 \left[1-\exp\left(-\dfrac{2b(x-r_0)}{\sigma^2}\right)\right],&b\ne0.
-\end{cases}
+\end{array} \right.
 $$
 
 For a law μ, define its scaled mean
