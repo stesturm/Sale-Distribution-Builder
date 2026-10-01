@@ -44,13 +44,13 @@ For this process:
 - if $b > 0$, $\mu$ is attainable exactly when $m_\mu = 0$;
 - the projection problems below use the boundary $m_\nu = 0$.
 
-For the paper's example Rₜ = 2 + Bₜ, S(x) = x − 2, so the scaled mean is simply E[X] − 2.
+For the paper's example $R_t = 2 + B_t$ for a Brownian motion $B$, $S(x) = x − 2$, so the scaled mean is simply $\nt x \mu(dx) - 2$.
 
 ## Which projection is solved?
 
 ### Positive target scaled mean: B′
 
-If mμ > 0, the target is neither attainable nor super-attainable. The program finds the closest law ν satisfying
+If $m_\mu > 0$, the target is neither attainable nor super-attainable. The program finds the closest law ν satisfying
 
 $$
 \int S(x)\,\nu(dx)=0.
@@ -60,11 +60,11 @@ There is no stochastic-dominance constraint. For divergences with finite recessi
 
 ### Zero target scaled mean
 
-If mμ = 0 within numerical tolerance, the target is already attainable and FOSD-maximal under the scaled-mean constraint. It is returned unchanged.
+If $m_\mu = 0$ within numerical tolerance, the target is already attainable and first order stochastic dominance-maximal under the scaled-mean constraint. It is returned unchanged.
 
 ### Negative target scaled mean: compact CM′
 
-If mμ < 0, the program finds the closest zero-scaled-mean law that first-order stochastically dominates the target:
+If $m_\mu < 0$, the program finds the closest zero-scaled-mean law that first-order stochastically dominates the target:
 
 $$
 \int S(x)\,\nu(dx)=0,
@@ -75,12 +75,12 @@ The unbounded problem need not have an optimizer: improving mass can escape to i
 
 ## Finite-dimensional program
 
-The completed builder contains N equally likely states. Repeated sale-price columns are coalesced into support points xᵢ with target masses pᵢ.
+The completed builder contains N equally likely states. Repeated sale-price columns are coalesced into support points $x_i$ with target masses $p_i$.
 
-The optimizer chooses candidate masses qᵢ and minimizes
+The optimizer chooses candidate masses $q_i$ and minimizes
 
 $$
-\sum_{i:p_i>0}p_i f(q_i/p_i)
+\sum_{i:p_i>0}p_i f(\frac{q_i}{p_i})
 +f'(\infty)\sum_{i:p_i=0}q_i
 $$
 
