@@ -40,9 +40,9 @@ $$
 
 For this process:
 
-- if b ≤ 0, μ is attainable before or at ruin exactly when mμ ≤ 0;
-- if b > 0, μ is attainable exactly when mμ = 0;
-- the projection problems below use the boundary mν = 0.
+- if $b \leq 0$, $\mu$ is attainable before or at ruin exactly when $m_\mu \leq 0$;
+- if $b > 0$, $\mu$ is attainable exactly when $m_\mu = 0$;
+- the projection problems below use the boundary $m_\nu = 0$.
 
 For the paper's example Rₜ = 2 + Bₜ, S(x) = x − 2, so the scaled mean is simply E[X] − 2.
 
