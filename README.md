@@ -21,7 +21,7 @@ $$
 
 absorbed when it reaches zero. There is no fixed calendar horizon. The paper's formal admissibility condition permits sale at ruin, so a mass at zero is possible.
 
-The scale function is normalized by S(r₀) = 0:
+The scale function is normalized by $S(r_0) = 0$:
 
 $$
 S(x)=
@@ -44,7 +44,7 @@ For this process:
 - if $b > 0$, $\mu$ is attainable exactly when $m_\mu = 0$;
 - the projection problems below use the boundary $m_\nu = 0$.
 
-For the paper's example $R_t = 2 + B_t$ for a Brownian motion $B$, $S(x) = x − 2$, so the scaled mean is simply $\nt x \mu(dx) - 2$.
+For the paper's example $R_t = 2 + B_t$ for a Brownian motion $B$, $S(x) = x − 2$, so the scaled mean is simply $\int x \mu(dx) - 2$.
 
 ## Which projection is solved?
 
@@ -80,7 +80,7 @@ The completed builder contains N equally likely states. Repeated sale-price colu
 The optimizer chooses candidate masses $q_i$ and minimizes
 
 $$
-\sum_{i:p_i>0}p_i f(\frac{q_i}{p_i})
+\sum_{i:p_i>0}p_i f\Bigl(\frac{q_i}{p_i}\Bigr)
 +f'(\infty)\sum_{i:p_i=0}q_i
 $$
 
@@ -106,20 +106,20 @@ For superlinear divergences, candidate mass is fixed to zero wherever the target
 Uses the classical relative entropy
 
 $$
-D_{KL}(\nu\|\mu)=\sum_iq_i\log(q_i/p_i).
+D_{KL}(\nu\|\mu)=\sum_iq_i\log\Bigl(\frac{q_i}{p_i}\Bigr).
 $$
 
 Its recession constant is infinite, so ν must be absolutely continuous with respect to μ: no new sale-price atom can be introduced.
 
 ### Rényi, configurable order α
 
-When Rényi is selected, an order field appears. Choose 0.1 ≤ α ≤ 5. At α = 1 the program calculates the exact KL limit; orders other than 1 within 0.01 of 1 are rejected for numerical stability (select 1 instead). The solver reports
+When Rényi is selected, an order field appears. Choose $0.1 ≤ \alpha ≤ 5$. At $\alpha = 1$ the program calculates the exact KL limit; orders other than 1 within 0.01 of 1 are rejected for numerical stability (select 1 instead). The solver reports
 
 $$
-D_\alpha(\nu\|\mu)=\frac{1}{\alpha-1}\log\left(\sum_{i:p_i>0}p_i(q_i/p_i)^\alpha\right).
+D_\alpha(\nu\|\mu)=\frac{1}{\alpha-1}\log\left(\sum_{i:p_i>0}p_i\Bigl(\frac{q_i}{p_i}\Bigr)^\alpha\right).
 $$
 
-For α > 1 it minimizes the convex power sum inside the logarithm; it is superlinear, so **new sale-price outcomes are forbidden**. At α = 2 this is the original order-two implementation. For 0 < α < 1 it minimizes the convex *negative* power sum. Its recession constant is zero, so the extended divergence **can add** default mass in B′ or upper-cap mass in CM′. At α = 1 the KL limit is solved directly, rather than dividing by α − 1.
+For $\alpha > 1$ it minimizes the convex power sum inside the logarithm; it is superlinear, so **new sale-price outcomes are forbidden**. At $\alpha = 2$ this is the original order-two implementation. For $0 < \alpha < 1$ it minimizes the convex *negative* power sum. Its recession constant is zero, so the extended divergence **can add** default mass in B′ or upper-cap mass in CM′. At $\alpha = 1$ the KL limit is solved directly, rather than dividing by $\slpha - 1$.
 
 ### Squared Hellinger
 
@@ -139,7 +139,7 @@ $$
 \frac12\sum_i|q_i-p_i|.
 $$
 
-This is solved as a linear program. It also permits endpoint mass and may have multiple optimizers. The interface uses a deterministic secondary rule: **among TV minimizers, choose the solution with the smallest sum of squared changes in grid-point probabilities**. This secondary problem is solved on the optimal-TV face. It is not described as the “largest” law in FOSD: distinct zero-scaled-mean laws cannot strictly dominate one another, because the scale function is strictly increasing. Thus all zero-scaled-mean feasible laws are FOSD-maximal, but there need not be a FOSD-greatest TV minimizer.
+This is solved as a linear program. It also permits endpoint mass and may have multiple optimizers. The interface uses a deterministic secondary rule: **among TV minimizers, choose the solution with the smallest sum of squared changes in grid-point probabilities**. This secondary problem is solved on the optimal-TV face. It is not described as the “largest” law in first order stochastic dominance: distinct zero-scaled-mean laws cannot strictly dominate one another, because the scale function is strictly increasing. Thus all zero-scaled-mean feasible laws are first order stochastic dominance-maximal, but there need not be a first order stochastic dominance-greatest TV minimizer.
 
 ## Numerical method and checks
 
