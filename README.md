@@ -26,7 +26,7 @@ The scale function is normalized by S(r₀) = 0:
 $$
 S(x)=
  \begin{array}{ll}
-x-r_0, & b=0,\\[2mm]
+x-r_0, & b=0,\\\[2mm]
 \frac{\sigma^2}{2b}
 \left[1-\exp\left(-\dfrac{2b(x-r_0)}{\sigma^2}\right)\right],&b\ne0.
 \end{array} 
