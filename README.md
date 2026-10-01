@@ -7,7 +7,7 @@ An implementation of the projection of distributions specified via distribution 
 
 The application provides a distribution-builder interface for choosing a distribution of the price at which a defaultable asset is sold.
 
-The user draws a target law μ. The program tests its scaled mean and, when appropriate, computes an attainable or optimal attainable law ν using the extended-f-divergence framework of Jin and Sturm, *Optimal Selling of Defaultable Assets using the Distribution Builder*, \url{https://arxiv.org/abs/2608.21716}.
+The user draws a target law μ. The program tests its scaled mean and, when appropriate, computes an attainable or optimal attainable law ν using the extended-f-divergence framework of Jin and Sturm, *Optimal Selling of Defaultable Assets using the Distribution Builder*, https://arxiv.org/abs/2608.21716.
 
 The numerical result is a projected **distribution**. The program does not construct or simulate the corresponding Azéma–Yor selling rule.
 
