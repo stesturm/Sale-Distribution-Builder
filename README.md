@@ -7,7 +7,7 @@ An implementation of the projection of distributions specified via distribution 
 
 The application provides a distribution-builder interface for choosing a distribution of the price at which a defaultable asset is sold.
 
-The user draws a target law μ. The program tests its scaled mean and, when appropriate, computes an attainable or optimal attainable law ν using the extended-f-divergence framework of Jin and Sturm, [*Optimal Selling of Defaultable Assets using the Distribution Builder*](\url{https://arxiv.org/abs/2608.21716).
+The user draws a target law μ. The program tests its scaled mean and, when appropriate, computes an attainable or optimal attainable law ν using the extended-f-divergence framework of Jin and Sturm, *Optimal Selling of Defaultable Assets using the Distribution Builder*, \url{\url{https://arxiv.org/abs/2608.21716}.
 
 The numerical result is a projected **distribution**. The program does not construct or simulate the corresponding Azéma–Yor selling rule.
 
@@ -119,14 +119,14 @@ $$
 D_\alpha(\nu\|\mu)=\frac{1}{\alpha-1}\log\left(\sum_{i:p_i>0}p_i\Bigl(\frac{q_i}{p_i}\Bigr)^\alpha\right).
 $$
 
-For $\alpha > 1$ it minimizes the convex power sum inside the logarithm; it is superlinear, so **new sale-price outcomes are forbidden**. At $\alpha = 2$ this is the original order-two implementation. For $0 < \alpha < 1$ it minimizes the convex *negative* power sum. Its recession constant is zero, so the extended divergence **can add** default mass in B′ or upper-cap mass in CM′. At $\alpha = 1$ the KL limit is solved directly, rather than dividing by $\slpha - 1$.
+For $\alpha > 1$ it minimizes the convex power sum inside the logarithm; it is superlinear, so **new sale-price outcomes are forbidden**. For $0 < \alpha < 1$ it minimizes the convex *negative* power sum. Its recession constant is zero, so the extended divergence **can add** default mass in B′ or upper-cap mass in CM′. At $\alpha = 1$ the KL limit is solved directly.
 
 ### Squared Hellinger
 
 Uses
 
 $$
-\frac12\sum_i(\sqrt{q_i}-\sqrt{p_i})^2.
+\frac12\sum_i\Bigl(\sqrt{q_i}-\sqrt{p_i}\Bigr)^2.
 $$
 
 The recession constant is finite, so the extended divergence permits the appropriate new endpoint mass.
@@ -136,18 +136,18 @@ The recession constant is finite, so the extended divergence permits the appropr
 Uses
 
 $$
-\frac12\sum_i|q_i-p_i|.
+\frac12\sum_i\bigl|q_i-p_i\bigr|.
 $$
 
-This is solved as a linear program. It also permits endpoint mass and may have multiple optimizers. The interface uses a deterministic secondary rule: **among TV minimizers, choose the solution with the smallest sum of squared changes in grid-point probabilities**. This secondary problem is solved on the optimal-TV face. It is not described as the “largest” law in first order stochastic dominance: distinct zero-scaled-mean laws cannot strictly dominate one another, because the scale function is strictly increasing. Thus all zero-scaled-mean feasible laws are first order stochastic dominance-maximal, but there need not be a first order stochastic dominance-greatest TV minimizer.
+This is solved as a linear program. It also permits endpoint mass and may have multiple optimizers. The interface uses a deterministic secondary rule: **among TV minimizers, choose the solution with the smallest sum of squared changes in grid-point probabilities**. This secondary problem is solved on the optimal-TV face and finds the solution that satisfies the first order stochastic dominance condition.
 
 ## Numerical method and checks
 
 - With moderately spread scales, feasibility is checked by SciPy HiGHS; KL, Rényi and Hellinger use constrained SLSQP and a convex optimality check. Hellinger and Rényi orders below 1 receive positive-density feasible initial guesses.
-- **Numerically stiff drift:** when the scale function spans large magnitudes, optimize in variables zᵢ = qᵢ max(1, |S(xᵢ)|). This keeps both moment-equation coefficient rows bounded by one, even when the required qᵢ are extremely small. A cutting-plane linear program minimizes piecewise-linear lower approximations of each convex divergence objective. Its evaluated objective minus the LP lower bound certifies the reported answer to the configured tolerance. If the direct solver fails its check at an intermediate drift, it also retries this rescaled method.
+- **Numerically stiff drift:** when the scale function spans large magnitudes, optimize in variables $z_i = q_i max(1, |S(x_i)|)$. This keeps both moment-equation coefficient rows bounded by one, even when the required $q_i$ are extremely small. A cutting-plane linear program minimizes piecewise-linear lower approximations of each convex divergence objective. Its evaluated objective minus the LP lower bound certifies the reported answer to the configured tolerance. If the direct solver fails its check at an intermediate drift, it also retries this rescaled method.
 - Total variation uses a scale-rescaled LP with absolute-value variables and a second cutting-plane LP to select the minimum-squared-mass-change solution on its minimum-TV face. The tie-break gap is checked rather than silently accepting a solver-dependent vertex.
 - Every smooth projection is checked against either the direct convex optimality bound or the cutting-plane lower-bound gap; a failure is not presented as a valid projection.
-- Constraints are linear: probability normalization, zero scaled mean and, for CM′, cumulative FOSD inequalities.
+- Constraints are linear: probability normalization, zero scaled mean and, for CM′, cumulative first order stochastic dominance inequalities.
 - Every returned result is checked for non-negativity, normalization, scaled-mean residual and stochastic-dominance residual. The zero-mean shortcut uses a weighted numerical error bound rather than the largest scale value in the support; a nonzero mean must not be returned as a zero-distance solution.
 - Infeasible support is reported rather than silently relaxing constraints. If the scale exponent itself exceeds floating-point range, the model reports that limitation rather than clipping the scale function and silently changing the problem.
 
@@ -155,7 +155,7 @@ This is solved as a linear program. It also permits endpoint mass and may have m
 
 - The solid green shape is the user-drawn target law.
 - The orange outline is the projected law.
-- Vertical height is shown in state-equivalent units: a projected probability q has height qN and can therefore be non-integer.
+- Vertical height is shown in state-equivalent units: a projected probability $q$ has height $qN$ and can therefore be non-integer.
 - The result displays both the projected scaled-mean residual and the largest change in probability at any support point. Very small new endpoint masses use scientific notation. Under strong drift relative to volatility, the scale function may be enormous and a genuinely necessary mass at zero or the cap can be smaller than a pixel: the UI says when the difference is below chart resolution. A calculated distance that rounds to zero is shown as **approximately zero, below numerical precision**, not as exact equality of distributions.
 - A displayed endpoint mass is new mass at zero or at the compact support cap, not a new target state selected by the user.
 
@@ -163,6 +163,6 @@ This is solved as a linear program. It also permits endpoint mass and may have m
 
 1. The builder discretizes the target law, so increasing the number of states and refining the payoff range can improve resolution.
 2. CM′ is a compact-support problem. Changing the visible upper cap changes the mathematical feasible set and can change the optimizer.
-3. KL and Rényi with α > 1 can be infeasible if the original target support alone cannot achieve zero scaled mean. Rényi with α < 1 permits endpoint mass.
-4. The numerical projection constructs ν only. Implementing an actual stopping policy requires the Azéma–Yor barriers and, for negative scaled mean, the paper's preliminary hitting-and-restart construction.
-5. Attainability is before or at ruin with no fixed sale deadline. Adding a finite horizon would be a different stopping problem.
+3. KL and Rényi with $\alpha > 1$ can be infeasible if the original target support alone cannot achieve zero scaled mean. Rényi with $\alpha < 1$ permits endpoint mass.
+4. The numerical projection constructs $\nu$ only. Implementing an actual stopping policy requires the Azéma–Yor barriers and, for negative scaled mean, the paper's preliminary hitting-and-restart construction.
+5. Attainability is before or at ruin with no fixed sale deadline. Adding a finite horizon is a different stopping problem.
