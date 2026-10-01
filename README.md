@@ -25,11 +25,11 @@ The scale function is normalized by S(r₀) = 0:
 
 $$
 S(x)=
-\left{ \begin{array}{ll}
+ \begin{array}{ll}
 x-r_0, & b=0,\\[2mm]
 \frac{\sigma^2}{2b}
 \left[1-\exp\left(-\dfrac{2b(x-r_0)}{\sigma^2}\right)\right],&b\ne0.
-\end{array} \right.
+\end{array} 
 $$
 
 For a law μ, define its scaled mean
