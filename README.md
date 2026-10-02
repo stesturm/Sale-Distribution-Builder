@@ -143,13 +143,13 @@ $$
 \frac12\sum_i\bigl|q_i-p_i\bigr|.
 $$
 
-This is solved as a linear program. It also permits endpoint mass and may have multiple optimizers. The interface uses a deterministic secondary rule: **among TV minimizers, choose the solution with the smallest sum of squared changes in grid-point probabilities**. This secondary problem is solved on the optimal-TV face and finds the solution that satisfies the first order stochastic dominance condition.
+This is solved by one linear program and permits endpoint mass. In this finite-grid B′/CM′ setup, a strictly increasing scale and the designated extreme endpoint make the exact TV optimum unique (after duplicate support points have been combined). For B′, transfer mass from the highest target payoffs to zero; for CM′, transfer mass from the lowest target payoffs to the cap, stopping when the scaled mean reaches zero. The LP solution is checked against normalization, the scaled-mean equality, dominance (CM′), and its own TV objective.
 
 ## Numerical method and checks
 
 - With moderately spread scales, feasibility is checked by SciPy HiGHS; KL, Rényi and Hellinger use constrained SLSQP and a convex optimality check. Hellinger and Rényi orders below 1 receive positive-density feasible initial guesses.
 - **Numerically stiff drift:** when the scale function spans large magnitudes, optimize in variables $z_i = q_i max(1, |S(x_i)|)$. This keeps both moment-equation coefficient rows bounded by one, even when the required $q_i$ are extremely small. A cutting-plane linear program minimizes piecewise-linear lower approximations of each convex divergence objective. Its evaluated objective minus the LP lower bound certifies the reported answer to the configured tolerance. If the direct solver fails its check at an intermediate drift, it also retries this rescaled method.
-- Total variation uses a scale-rescaled LP with absolute-value variables and a second cutting-plane LP to select the minimum-squared-mass-change solution on its minimum-TV face. The tie-break gap is checked rather than silently accepting a solver-dependent vertex.
+- Total variation uses a scale-rescaled LP with absolute-value variables. Returned probabilities and objective are checked.
 - Every smooth projection is checked against either the direct convex optimality bound or the cutting-plane lower-bound gap; a failure is not presented as a valid projection.
 - Constraints are linear: probability normalization, zero scaled mean and, for CM′, cumulative first order stochastic dominance inequalities.
 - Every returned result is checked for non-negativity, normalization, scaled-mean residual and stochastic-dominance residual. The zero-mean shortcut uses a weighted numerical error bound rather than the largest scale value in the support; a nonzero mean must not be returned as a zero-distance solution.
